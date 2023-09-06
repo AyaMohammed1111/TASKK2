@@ -1,0 +1,37 @@
+<br>
+<br>
+
+<img class="card-img-top" src="https://thesavvysparrow.com/wp-content/uploads/2021/07/monthly-to-do-list-3-1024x768.jpg"
+ alt="Card image" width="100" height="200">
+<p style="text-align:center ; font: size 50px; ">Enter text</p>
+
+<div class="card mx-auto shadow-lg p-3 mb-5 bg-body rounded" style="width: 60%; height: auto;">
+  <div class="row m-3">
+    <div class="col-6">
+      <input type="text" class="form-control" placeholder="write Task" [(ngModel)]="task" (input)="onChange()" />
+    </div>
+    <div class="col-1">
+      <button styleClass="p-button-secondary"(click)="addTask()" [disabled]="!isValid()">Add</button>
+    </div>
+    <div class="col-2">
+      <button label="Warning" styleClass="p-button-rounded p-button-warning" (click)="deleteAllTasks()">Delete All</button>
+    </div>
+  </div>
+  <div class="alert alert-danger mt-2" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="row m-3" *ngFor="let item of list; let i = index">
+    <div class="col-1">
+      <button class="btn btn-danger btn-sm pull-right" (click)="deleteTask(i)">Delete</button>
+    </div>
+    <div class="col-5">
+      <div class="form-check my-1">
+        <input class="form-check-input" (change)="changeStatus(i, item.IsComplete)" type="checkbox" [checked]="item.IsComplete"
+          id="{{ 'checkbox-' + i }}">
+        <label class="form-check-label" for="{{ 'checkbox-' + i }}">
+          <ng-container *ngIf="item.IsComplete; else notComplete">{{ item.TaskName }}</ng-container>
+          <ng-template #notComplete>{{ item.TaskName }}</ng-template>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
